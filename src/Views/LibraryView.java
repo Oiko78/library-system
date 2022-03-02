@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 import Controllers.LibraryController;
+import Helpers.Util;
 import Models.Book;
-import Utils.Util;
+import Models.User;
 
 public class LibraryView {
-  LibraryController libraryController;
+  private LibraryController libraryController;
 
-  public LibraryView(LibraryController libraryController) {
+  public LibraryView(LibraryController libraryController, User user) {
     this.libraryController = libraryController;
+    this.libraryController.user = user;
     mainMenu(true);
   }
 
@@ -19,7 +21,7 @@ public class LibraryView {
     while (inMenu) {
       Util.clearConsole();
 
-      System.out.println("Welcome to the library.\nPlease select an action!");
+      System.out.printf("Hello %s.\nPlease select an action!\n", libraryController.user.name);
       System.out.println("=======================");
       System.out.println("1. Insert Book");
       System.out.println("2. Delete Book");
@@ -33,7 +35,7 @@ public class LibraryView {
       int input = -1;
       try {
         input = Util.scan.nextInt();
-      } catch (InputMismatchException e) {
+      } catch (Exception e) {
         Util.clearConsole();
         Util.showError(e);
       }
@@ -67,12 +69,14 @@ public class LibraryView {
       System.out.println("=======================");
       try {
         System.out.print("Book title: " + (title.isEmpty() ? "" : title + "\n"));
-        if (title.isEmpty())
-          title = libraryController.getBookTitle();
+        title = title.isEmpty() ? libraryController.getBookTitle() : title;
+        if (title.compareToIgnoreCase("quit") == 0)
+          return;
 
         System.out.print("Book author: " + (author.isEmpty() ? "" : author + "\n"));
-        if (author.isEmpty())
-          author = libraryController.getBookAuthor();
+        author = author.isEmpty() ? libraryController.getBookAuthor() : author;
+        if (author.compareToIgnoreCase("quit") == 0)
+          return;
 
       } catch (Exception e) {
         Util.clearConsole();
@@ -85,7 +89,7 @@ public class LibraryView {
 
     Util.clearConsole();
     boolean success = libraryController.insertBook(title, author);
-    System.out.printf((success ? "successfully inserted book %s.\n" : "failed to insert book %s!"), title);
+    System.out.printf((success ? "successfully inserted book %s.\n" : "failed to insert book %s!\n"), title);
     Util.cont();
     return;
   }
