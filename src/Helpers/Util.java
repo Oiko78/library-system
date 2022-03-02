@@ -1,10 +1,12 @@
-package Utils;
+package Helpers;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Util {
   public static Scanner scan = new Scanner(System.in);
+  public static Console console = System.console();
 
   public static void clearConsole() {
     try {
