@@ -13,8 +13,13 @@ public class LibraryController {
     this.library = library;
   }
 
-  public void insertBook(Book book) {
-    this.library.books.add(book);
+  public boolean insertBook(String title, String author) {
+    if (title.compareToIgnoreCase("quit") == 0 ||
+        author.compareToIgnoreCase("quit") == 0)
+      return false;
+
+    this.library.books.add(new Book(title, author));
+    return true;
   }
 
   public ArrayList<Book> getAllBooks() {

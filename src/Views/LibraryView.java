@@ -37,6 +37,7 @@ public class LibraryView {
         Util.clearConsole();
         Util.showError(e);
       }
+
       // Untuk clar buffer "enter" karena nextInt hanya read number, jadi masih ada
       // buffer "enter"
       Util.scan.nextLine();
@@ -62,7 +63,7 @@ public class LibraryView {
     while (inMenu) {
       Util.clearConsole();
 
-      System.out.println("Insert book data!");
+      System.out.println("Insert book data! (type quit to cancel)");
       System.out.println("=======================");
       try {
         System.out.print("Book title: " + (title.isEmpty() ? "" : title + "\n"));
@@ -83,8 +84,8 @@ public class LibraryView {
     }
 
     Util.clearConsole();
-    System.out.printf("%s book successfully inserted.\n", title);
-    libraryController.insertBook(new Book(title, author));
+    boolean success = libraryController.insertBook(title, author);
+    System.out.printf((success ? "successfully inserted book %s.\n" : "failed to insert book %s!"), title);
     Util.cont();
     return;
   }
