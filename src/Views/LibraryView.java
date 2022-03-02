@@ -1,6 +1,7 @@
 package Views;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 import Controllers.LibraryController;
 import Models.Book;
@@ -11,9 +12,50 @@ public class LibraryView {
 
   public LibraryView(LibraryController libraryController) {
     this.libraryController = libraryController;
+    mainMenu(true);
   }
 
-  public void InsertMenu(boolean inMenu) {
+  public void mainMenu(boolean inMenu) {
+    while (inMenu) {
+      Util.clearConsole();
+
+      System.out.println("Welcome to the library.\nPlease select an action!");
+      System.out.println("=======================");
+      System.out.println("1. Insert Book");
+      System.out.println("2. Delete Book");
+      System.out.println("3. Update Book Detail");
+      System.out.println("4. Update Book Status");
+      System.out.println("5. Get Available Book");
+      System.out.println("6. Get All Book");
+      System.out.println("7. Quit");
+      System.out.print(">> ");
+
+      int input = -1;
+      try {
+        input = Util.scan.nextInt();
+      } catch (InputMismatchException e) {
+        Util.clearConsole();
+        Util.showError(e);
+      }
+      // Untuk clar buffer "enter" karena nextInt hanya read number, jadi masih ada
+      // buffer "enter"
+      Util.scan.nextLine();
+
+      switch (input) {
+        case 1:
+          insertMenu(true);
+          break;
+        case 6:
+          getAllBookMenu(true);
+          break;
+        case 7:
+          inMenu = false;
+          break;
+      }
+    }
+  }
+
+  public void insertMenu(boolean inMenu) {
     String title = "";
     String author = "";
 
@@ -47,7 +89,7 @@ public class LibraryView {
     return;
   }
 
-  public void GetAllBookMenu(boolean inMenu) {
+  public void getAllBookMenu(boolean inMenu) {
     Util.clearConsole();
 
     ArrayList<Book> books = libraryController.getAllBooks();
