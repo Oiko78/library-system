@@ -7,6 +7,6 @@ public class Library {
 
   public Library() {
     this.books = new ArrayList<>();
-    books.add(new Book("This is title", "This is author"));
+    books.add(new Book("This is title", "This is author", true));
   }
 }

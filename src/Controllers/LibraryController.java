@@ -19,7 +19,7 @@ public class LibraryController {
     if (title.isEmpty() || author.isEmpty())
       return false;
 
-    this.library.books.add(new Book(title, author));
+    this.library.books.add(new Book(title, author, true));
     return true;
   }
 
