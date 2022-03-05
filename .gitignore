@@ -105,6 +105,12 @@ db.sqlite3-journal
 *.ear
 *.nar
 hs_err_pid*
+bin/
+build/
+.gradle
+.gradletasknamecache
+gradle-app.setting
+!gradle-wrapper.jar
  
 # Flask stuff:
 instance/
