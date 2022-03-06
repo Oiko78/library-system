@@ -64,6 +64,8 @@ public class Member extends User{
       System.out.println("3. Borrow a Book");
       System.out.println("4. Return a Book");
       System.out.println("5. Exit");
+      Util.printGetInput();
+      choice = Util.scanInteger();
       
       switch (choice) {
         case 1:

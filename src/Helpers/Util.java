@@ -40,6 +40,13 @@ public class Util {
     return str.trim();
   }
 
+  
+  public static int scanInteger(){
+    // scans new line and remove white spaces in front and after, and convertes to integer
+    String str = scan.nextLine();
+    return Integer.parseInt(str.trim());
+  }
+
   public static void cont() {
     System.out.print("Press enter to continue...");
     scan.nextLine();
@@ -52,11 +59,11 @@ public class Util {
   }
   public static void printGetInput(){
     System.out.print("Input here: ");
+  }
 
   public static boolean quitMenu(String query) {
     if (query.compareToIgnoreCase("quit") == 0)
       return true;
-
     return false;
   }
 }

@@ -1,5 +1,6 @@
 package ModelsRework;
 
+import Helpers.Util;
 
 public class Staff extends User {
 
@@ -19,6 +20,7 @@ public class Staff extends User {
     // Return Book
     int choice = 0;
     do{
+
       System.out.println("1. View All Books");
       System.out.println("2. View Avaialble Books");
       System.out.println("3. Add a Book");
@@ -26,6 +28,8 @@ public class Staff extends User {
       System.out.println("5. Delete a Book");
       System.out.println("6. See all Members");//start from users[i]
       System.out.println("7. Exit");
+      Util.printGetInput();
+      choice = Util.scanInteger();
       
       switch (choice) {
         case 1:

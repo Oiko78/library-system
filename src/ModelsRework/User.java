@@ -45,30 +45,32 @@ public class User {
 
 
   // Login --> maybe will return int --> index of User in library
-  public boolean login(ArrayList<User> users){
+  public int login(ArrayList<User> users){
     String id;
     String password;
+    int token;
     do{
       System.out.println("Enter id: ");
       id = Util.scanLine();
       System.out.println("Enter Password: ");
       password = Util.scanLine();
-    }while(!validAccount(id, password, users));
-    return true;
+      token = validAccount(id, password, users);
+    }while(token == -1);
+    return token;
   }
 
   // note: yang ini kepikiran untuk return idx usernya, supaya pas login tinggal pake user itu...
-  private boolean validAccount(String id, String password, ArrayList<User> users) {
+  private int validAccount(String id, String password, ArrayList<User> users) {
     // Loop through existing ArrayList of Users, if found and matches return true
     for(int i = 0; i < users.size(); i++){
       String currId = users.get(i).getId();
       // haven't test this yet:
-      if(currId == id){
+      if(currId.compareToIgnoreCase(id) == 0){
         String currPassword = users.get(i).getPassword();
-        if(currPassword == password)return true;
+        if(currPassword.compareToIgnoreCase(password) == 0)return i;
       }
     }
-    return false;
+    return -1;
   }
 
 
