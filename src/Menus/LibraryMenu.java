@@ -103,7 +103,7 @@ public class LibraryMenu {
     Util.scan.nextLine();
 
     switch (menu) {
-      case 5:
+      case 6:
         return false;
     }
     return true;
