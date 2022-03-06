@@ -8,6 +8,8 @@ import java.util.Scanner;
  * This {@code Util} class provides methods to help preventing code redundancy.
  *
  * @author Oliver Chico
+ * @author Kevin Bryan
+ * 
  * @see Scanner
  * @see Console
  */
@@ -34,36 +36,23 @@ public class Util {
     cont();
   }
 
-  public static String scanLine(){
-    // scans new line and remove white spaces in front and after
+  /**
+   * Scans a line and remove trailing white spaces
+   */
+  public static String scanLine() {
     String str = scan.nextLine();
     return str.trim();
   }
 
-  
-  public static int scanInteger(){
-    // scans new line and remove white spaces in front and after, and convertes to integer
-    String str = scan.nextLine();
-    return Integer.parseInt(str.trim());
+  /**
+   * Scans a line and remove trailing white spaces then convert it to an integer
+   */
+  public static int scanInteger() {
+    return Integer.parseInt(scanLine());
   }
 
   public static void cont() {
     System.out.print("Press enter to continue...");
     scan.nextLine();
-  }
-  public static void printLine(){
-    System.out.println("==========================");
-  }
-  public static void printTitle(){
-    System.out.println("GoLibrary 📖");
-  }
-  public static void printGetInput(){
-    System.out.print("Input here: ");
-  }
-
-  public static boolean quitMenu(String query) {
-    if (query.compareToIgnoreCase("quit") == 0)
-      return true;
-    return false;
   }
 }
