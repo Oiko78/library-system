@@ -21,8 +21,23 @@ public class Util {
     cont();
   }
 
+  public static String scanLine(){
+    // scans new line and remove white spaces in front and after
+    String str = scan.nextLine();
+    return str.trim();
+  }
+
   public static void cont() {
     System.out.print("Press enter to continue...");
     scan.nextLine();
+  }
+  public static void printLine(){
+    System.out.println("==========================");
+  }
+  public static void printTitle(){
+    System.out.println("GoLibrary 📖");
+  }
+  public static void printGetInput(){
+    System.out.print("Input here: ");
   }
 }

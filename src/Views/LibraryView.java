@@ -17,6 +17,48 @@ public class LibraryView {
     mainMenu(true);
   }
 
+  public void adminMenu(boolean inMenu){
+    while (inMenu) {
+      Util.clearConsole();
+
+      System.out.printf("Hello %s.\nPlease select an action!\n", libraryController.user.name);
+      System.out.println("=======================");
+      System.out.println("1. Insert Book");
+      System.out.println("2. Delete Book");
+      System.out.println("3. Update Book Detail");
+      // Update book detail anggap sudah mencakup 
+      System.out.println("4. Update Book Status");
+      System.out.println("5. Get Available Book");
+      System.out.println("6. Get All Book");
+      System.out.println("7. Quit");
+      System.out.print(">> ");
+
+      int input = -1;
+      try {
+        input = Util.scan.nextInt();
+      } catch (Exception e) {
+        Util.clearConsole();
+        Util.showError(e);
+      }
+
+      // Untuk clar buffer "enter" karena nextInt hanya read number, jadi masih ada
+      // buffer "enter"
+      Util.scan.nextLine();
+
+      switch (input) {
+        case 1:
+          insertMenu(true);
+          break;
+        case 6:
+          getAllBookMenu(true);
+          break;
+        case 7:
+          inMenu = false;
+          break;
+      }
+    }
+  }
+
   public void mainMenu(boolean inMenu) {
     while (inMenu) {
       Util.clearConsole();
