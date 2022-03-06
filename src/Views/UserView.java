@@ -1,28 +1,28 @@
 package Views;
 
-import java.util.InputMismatchException;
-
 import Controllers.LibraryController;
 import Controllers.UserController;
 import Helpers.Util;
+import Models.Library;
+import Models.User;
 
 public class UserView {
-  private UserController userController;
-  private LibraryController libraryController;
+  private UserController controller;
 
-  public UserView(UserController userController, LibraryController libraryController) {
-    this.userController = userController;
-    this.libraryController = libraryController;
-    mainMenu(true);
+  public UserView(UserController controller) {
+    this.controller = controller;
   }
 
   public void mainMenu(boolean inMenu) {
-    userController.login("admin@admin.net", "Admin123");
+    controller.login("admin@admin.net", "Admin123");
+    Library library = new Library();
 
     while (inMenu) {
-      if (userController.getUser() != null) {
-        LibraryView libraryMenu = new LibraryView(libraryController, userController.getUser());
-        userController.logout();
+      if (controller.getUser() != null) {
+        LibraryController libraryController = new LibraryController(library);
+        LibraryView libraryMenu = new LibraryView(libraryController, controller.getUser());
+        libraryMenu.mainMenu();
+        controller.logout();
         continue;
       }
       Util.clearConsole();
@@ -61,8 +61,7 @@ public class UserView {
   }
 
   public void loginMenu(boolean inMenu) {
-    String email = "";
-    String password = "";
+    User user = null;
 
     while (inMenu) {
       Util.clearConsole();
@@ -70,39 +69,26 @@ public class UserView {
       System.out.println("Login (type quit to cancel)");
       System.out.println("=======================");
       try {
-        System.out.print("Email: " + (email.isEmpty() ? "" : email + "\n"));
-        email = email.isEmpty() ? userController.getEmail(false) : email;
-        if (email.compareToIgnoreCase("quit") == 0)
+        user = getUserCredential();
+        if (user == null)
           return;
 
-        System.out.print("Password: " + (password.isEmpty() ? "" : password + "\n"));
-        password = password.isEmpty() ? userController.getPassword(false) : password;
-        if (password.compareToIgnoreCase("quit") == 0)
+        Util.clearConsole();
+        boolean success = controller.login(user.email, user.password);
+        System.out.println(success ? "Login successfull." : "Failed to login!\nPlease check your email or password!");
+        Util.cont();
+        if (success)
           return;
 
       } catch (Exception e) {
         Util.clearConsole();
         Util.showError(e);
-        continue;
       }
-
-      inMenu = false;
     }
-
-    Util.clearConsole();
-    boolean success = userController.login(email, password);
-    System.out.println(success ? "Login successfull." : "Failed to login!\nPlease check your email or password!");
-    Util.cont();
-
-    if (!success)
-      loginMenu(true);
   }
 
   public void registerMenu(boolean inMenu) {
-    String email = "";
-    String password = "";
-    String name = "";
-    int age = -1;
+    User user = null;
 
     while (inMenu) {
       Util.clearConsole();
@@ -110,38 +96,77 @@ public class UserView {
       System.out.println("Register (type quit to cancel)");
       System.out.println("=======================");
       try {
-        System.out.print("Name: " + (name.isEmpty() ? "" : name + "\n"));
-        name = name.isEmpty() ? userController.getName() : name;
-        if (name.compareToIgnoreCase("quit") == 0)
+        user = getUserData();
+        if (user == null)
           return;
 
-        System.out.print("Age: " + (age == -1 ? "" : age + "\n"));
-        age = age == -1 ? userController.getAge() : age;
-        if (age == -1)
-          return;
-
-        System.out.print("Email: " + (email.isEmpty() ? "" : email + "\n"));
-        email = email.isEmpty() ? userController.getEmail(true) : email;
-        if (email.compareToIgnoreCase("quit") == 0)
-          return;
-
-        System.out.print("Password: " + (password.isEmpty() ? "" : password + "\n"));
-        password = password.isEmpty() ? userController.getPassword(true) : password;
-        if (password.compareToIgnoreCase("quit") == 0)
+        Util.clearConsole();
+        boolean success = controller.register(user.email, user.password, user.name, user.age);
+        System.out.println(success ? "Account has successfully registered." : "Register failed!");
+        Util.cont();
+        if (success)
           return;
 
       } catch (Exception e) {
         Util.clearConsole();
         Util.showError(e);
-        continue;
       }
+    }
+  }
 
-      inMenu = false;
+  public User getUserData() throws Exception {
+    String email = "", password = "", name = "";
+    int age = -1;
+
+    System.out.print("Name: " + (name.isEmpty() ? "" : name + "\n"));
+    if (name.isEmpty())
+      name = Util.scan.nextLine();
+
+    if (Util.quitMenu(name))
+      return null;
+
+    System.out.print("Age: " + (age <= -1 ? "" : age + "\n"));
+    if (age <= -1) {
+      age = Util.scan.nextInt();
     }
 
-    Util.clearConsole();
-    boolean success = userController.register(email, password, name, age);
-    System.out.println(success ? "Account has successfully registered." : "Register failed!");
-    Util.cont();
+    if (age <= -1)
+      return null;
+
+    System.out.print("Email: " + (email.isEmpty() ? "" : email + "\n"));
+    if (email.isEmpty())
+      email = Util.scan.nextLine();
+
+    if (Util.quitMenu(email))
+      return null;
+
+    System.out.print("Password: " + (password.isEmpty() ? "" : password + "\n"));
+    if (password.isEmpty())
+      password = new String(Util.console.readPassword());
+
+    if (Util.quitMenu(password))
+      return null;
+
+    return new User(email, password, name, age);
+  }
+
+  public User getUserCredential() throws Exception {
+    String email = "", password = "";
+
+    System.out.print("Email: " + (email.isEmpty() ? "" : email + "\n"));
+    if (email.isEmpty())
+      email = Util.scan.nextLine();
+
+    if (Util.quitMenu(email))
+      return null;
+
+    System.out.print("Password: " + (password.isEmpty() ? "" : password + "\n"));
+    if (password.isEmpty())
+      password = new String(Util.console.readPassword());
+
+    if (Util.quitMenu(password))
+      return null;
+
+    return new User(email, password);
   }
 }
