@@ -21,7 +21,7 @@ package Models;
 public class Book {
   public String title;
   public String author;
-  private boolean isAvailable;
+  public boolean isAvailable;
 
   public Book(String title, String author, boolean isAvailable) {
     this.title = title;
@@ -34,7 +34,8 @@ public class Book {
    */
   @Override
   public String toString() {
-    String str = "";
+    String str = "=======================\n";
+    str = str.concat(title + "\n");
     str = str.concat("author: " + author + "\n");
     str = str.concat("status: " + (isAvailable ? "available" : "borrowed"));
     return str;

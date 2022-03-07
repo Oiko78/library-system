@@ -1,10 +1,12 @@
 package Menus;
 
 import Helpers.Util;
+import Models.Book;
 import Models.Library;
 import Models.Member;
 import Models.Staff;
 import Models.User;
+
 
 /**
  * {@code LibraryMenu} class represents a menu that will displays some action
@@ -59,26 +61,34 @@ public class LibraryMenu {
   }
 
   private boolean memberMainMenu() {
-    System.out.println("Library");
-    System.out.println("===========");
-    System.out.println("1. View All Books");
-    System.out.println("2. View Avaialble Books");
-    System.out.println("3. Borrow a Book");
-    System.out.println("4. Return a Book");
-    System.out.println("5. Exit");
-
     int menu = -1;
-    try {
-      menu = Util.scan.nextInt();
-    } catch (Exception e) {
-      Util.clearConsole();
-      Util.showError(e);
-    }
-    Util.scan.nextLine();
+    while(menu != 5){
+      System.out.println("Library");
+      System.out.println("===========");
+      System.out.println("1. View All Books");
+      System.out.println("2. View Avaialble Books");
+      System.out.println("3. Borrow a Book");
+      System.out.println("4. Return a Book");
+      System.out.println("5. Exit");
 
-    switch (menu) {
-      case 5:
-        return false;
+      try {
+        menu = Util.scanInteger();
+      } catch (Exception e) {
+        Util.clearConsole();
+        Util.showError(e);
+      }
+      // Util.scan.nextLine();
+  
+      switch (menu) {
+        case 1:
+          viewAllBook(library);
+          break;
+        case 2:
+          viewAvailableBook(library);
+          break;
+        case 5:
+          return false;
+      }
     }
     return true;
   }
@@ -108,5 +118,28 @@ public class LibraryMenu {
     }
     return true;
   }
+
+      // To view all the books in library
+    public static void viewAllBook(Library library){
+      System.out.println();
+      for(int i = 0; i < library.books.size(); i++){
+        Book currBook = library.books.get(i);
+        System.out.println(currBook.toString());
+      }
+      System.out.println();
+      Util.cont();
+    }
+      
+        // To view all the book that are available
+    public static void viewAvailableBook(Library library){
+      System.out.println();
+      for(int i = 0; i < library.books.size(); i++){
+        Book currBook = library.books.get(i);
+        if(currBook.isAvailable)
+        System.out.println(currBook.toString());
+      }
+      System.out.println();
+      Util.cont();
+    }
 
 }
