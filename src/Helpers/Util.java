@@ -2,6 +2,7 @@ package Helpers;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -55,5 +56,23 @@ public class Util {
   public static void cont() {
     System.out.print("Press enter to continue...");
     scan.nextLine();
+  }
+
+  public static <T> void printTable(List<T> objects) {
+    boolean odd = false;
+    System.out.println("=======================");
+    for (int i = 0; i < objects.size(); i++) {
+      System.out.println(objects.get(i));
+      if (i == objects.size() - 1)
+        continue;
+
+      System.out.println("-----------------------");
+    }
+    System.out.println("=======================");
+  }
+
+  public static <T> void printTable(List<T> objects, String title) {
+    System.out.println(title);
+    printTable(objects);
   }
 }

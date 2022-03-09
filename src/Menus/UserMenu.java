@@ -3,8 +3,6 @@ package Menus;
 import java.util.Map;
 
 import Helpers.Util;
-import Models.Book;
-import Models.Library;
 import Models.Member;
 import Models.User;
 
@@ -64,12 +62,11 @@ public class UserMenu {
 
       int menu = -1;
       try {
-        menu = Util.scan.nextInt();
+        menu = Util.scanInteger();
       } catch (Exception e) {
         Util.clearConsole();
         Util.showError(e);
       }
-      Util.scan.nextLine();
 
       switch (menu) {
         case 1:

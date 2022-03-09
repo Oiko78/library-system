@@ -1,12 +1,13 @@
 package Menus;
 
+import java.util.ArrayList;
+
 import Helpers.Util;
 import Models.Book;
 import Models.Library;
 import Models.Member;
 import Models.Staff;
 import Models.User;
-
 
 /**
  * {@code LibraryMenu} class represents a menu that will displays some action
@@ -57,39 +58,38 @@ public class LibraryMenu {
       if (user instanceof Staff)
         inMenu = staffMainMenu();
     }
+
     return null;
   }
 
   private boolean memberMainMenu() {
-    int menu = -1;
-    while(menu != 5){
-      System.out.println("Library");
-      System.out.println("===========");
-      System.out.println("1. View All Books");
-      System.out.println("2. View Avaialble Books");
-      System.out.println("3. Borrow a Book");
-      System.out.println("4. Return a Book");
-      System.out.println("5. Exit");
+    System.out.println("Library");
+    System.out.println("===========");
+    System.out.println("1. View All Books");
+    System.out.println("2. View Avaialble Books");
+    System.out.println("3. Borrow a Book");
+    System.out.println("4. Return a Book");
+    System.out.println("5. Exit");
 
-      try {
-        menu = Util.scanInteger();
-      } catch (Exception e) {
-        Util.clearConsole();
-        Util.showError(e);
-      }
-      // Util.scan.nextLine();
-  
-      switch (menu) {
-        case 1:
-          viewAllBook(library);
-          break;
-        case 2:
-          viewAvailableBook(library);
-          break;
-        case 5:
-          return false;
-      }
+    int menu = -1;
+    try {
+      menu = Util.scanInteger();
+    } catch (Exception e) {
+      Util.clearConsole();
+      Util.showError(e);
     }
+
+    switch (menu) {
+      case 1:
+        viewAllBook();
+        break;
+      case 2:
+        viewAvailableBook();
+        break;
+      case 5:
+        return false;
+    }
+
     return true;
   }
 
@@ -105,41 +105,40 @@ public class LibraryMenu {
 
     int menu = -1;
     try {
-      menu = Util.scan.nextInt();
+      menu = Util.scanInteger();
     } catch (Exception e) {
       Util.clearConsole();
       Util.showError(e);
     }
-    Util.scan.nextLine();
 
     switch (menu) {
+      case 1:
+        viewAllBook();
+        break;
+      case 2:
+        viewAvailableBook();
+        break;
       case 6:
         return false;
     }
     return true;
   }
 
-      // To view all the books in library
-    public static void viewAllBook(Library library){
-      System.out.println();
-      for(int i = 0; i < library.books.size(); i++){
-        Book currBook = library.books.get(i);
-        System.out.println(currBook.toString());
-      }
-      System.out.println();
-      Util.cont();
-    }
-      
-        // To view all the book that are available
-    public static void viewAvailableBook(Library library){
-      System.out.println();
-      for(int i = 0; i < library.books.size(); i++){
-        Book currBook = library.books.get(i);
-        if(currBook.isAvailable)
-        System.out.println(currBook.toString());
-      }
-      System.out.println();
-      Util.cont();
-    }
+  // To view all the books in library
+  private void viewAllBook() {
+    Util.clearConsole();
+    Util.printTable(library.books);
+    Util.cont();
+  }
+
+  // To view all the book that are available
+  private void viewAvailableBook() {
+    ArrayList<Book> availableBooks = new ArrayList<>(library.books);
+    availableBooks.removeIf(book -> !book.isAvailable);
+
+    Util.clearConsole();
+    Util.printTable(availableBooks);
+    Util.cont();
+  }
 
 }

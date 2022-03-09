@@ -34,7 +34,7 @@ public class Book {
    */
   @Override
   public String toString() {
-    String str = "=======================\n";
+    String str = "";
     str = str.concat(title + "\n");
     str = str.concat("author: " + author + "\n");
     str = str.concat("status: " + (isAvailable ? "available" : "borrowed"));
