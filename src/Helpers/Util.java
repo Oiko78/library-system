@@ -59,16 +59,15 @@ public class Util {
   }
 
   public static <T> void printTable(List<T> objects) {
-    boolean odd = false;
     System.out.println("=======================");
     for (int i = 0; i < objects.size(); i++) {
-      System.out.println(objects.get(i));
+      System.out.println((i + 1) + ". " + objects.get(i));
       if (i == objects.size() - 1)
         continue;
 
       System.out.println("-----------------------");
     }
-    System.out.println("=======================");
+    System.out.println("=======================\n");
   }
 
   public static <T> void printTable(List<T> objects, String title) {
