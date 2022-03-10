@@ -127,14 +127,14 @@ public class LibraryMenu {
   // To view all the books in library
   private void viewAllBook() {
     Util.clearConsole();
-    Util.printTable(library.books);
+    Util.printTable(library.getBooks());
     Util.cont();
   }
 
   // To view all the book that are available
   private void viewAvailableBook() {
-    ArrayList<Book> availableBooks = new ArrayList<>(library.books);
-    availableBooks.removeIf(book -> !book.isAvailable);
+    ArrayList<Book> availableBooks = new ArrayList<>(library.getBooks());
+    availableBooks.removeIf(book -> !book.isAvailable());
 
     Util.clearConsole();
     Util.printTable(availableBooks);
