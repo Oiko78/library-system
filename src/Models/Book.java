@@ -19,14 +19,35 @@ package Models;
  * @author Kevin Bryan
  */
 public class Book {
-  public String title;
-  public String author;
-  public boolean isAvailable;
+  private String title;
+  private String author;
+  private boolean available;
 
-  public Book(String title, String author, boolean isAvailable) {
+  public Book(String title, String author, boolean available) {
     this.title = title;
     this.author = author;
-    this.isAvailable = isAvailable;
+    this.available = available;
+  }
+
+  public String getBookTitle() {
+    return this.title;
+  }
+
+  public String getBookAuthor() {
+    return this.author;
+  }
+
+  public boolean isAvailable() {
+    return this.available;
+  }
+
+  public void changeStatus() {
+    this.available = !this.available;
+  }
+
+  public void updateBook(String title, String author) {
+    this.title = title.isEmpty() ? this.title : title;
+    this.author = author.isEmpty() ? this.author : author;
   }
 
   /**
@@ -37,7 +58,7 @@ public class Book {
     String str = "";
     str = str.concat(title + "\n");
     str = str.concat("author: " + author + "\n");
-    str = str.concat("status: " + (isAvailable ? "available" : "borrowed"));
+    str = str.concat("status: " + (available ? "available" : "borrowed"));
     return str;
   }
 }

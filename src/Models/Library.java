@@ -37,7 +37,7 @@ import java.util.ArrayList;
  * @see Models.Book
  */
 public class Library {
-  public ArrayList<Book> books;
+  private ArrayList<Book> books;
 
   public Library() {
     this.books = new ArrayList<Book>();
@@ -45,6 +45,22 @@ public class Library {
 
   public Library(ArrayList<Book> books) {
     this.books = books;
+  }
+
+  public ArrayList<Book> getBooks() {
+    return new ArrayList<Book>(books);
+  }
+
+  public Book getBook(int index) {
+    return books.get(index);
+  }
+
+  public void removeBook(Book book) {
+    books.remove(book);
+  }
+
+  public void insertBook(Book book) {
+    books.add(book);
   }
 
   /**
@@ -60,5 +76,13 @@ public class Library {
     books.add(new Book("Tokyo Ghoul", "Kaneki", true));
 
     return new Library(books);
+  }
+
+  public boolean isExistsBook(String title) {
+    for (Book book : books)
+      if (book.getBookTitle().compareTo(title) == 0)
+        return true;
+
+    return false;
   }
 }
