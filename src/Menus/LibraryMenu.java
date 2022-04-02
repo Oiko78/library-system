@@ -41,10 +41,16 @@ import Models.User;
 public class LibraryMenu {
   private Library library;
   private User user;
+  private ArrayList<Book> books;
 
   public LibraryMenu(Library library, User user) {
     this.library = library;
     this.user = user;
+    this.books = library.getBooks();
+  }
+
+  private ArrayList<Book> getAllBooks(){
+    return library.getBooks();
   }
 
   public User displayMainMenu() {
@@ -82,9 +88,11 @@ public class LibraryMenu {
     switch (menu) {
       case 1:
         viewAllBook();
+        Util.cont();
         break;
       case 2:
         viewAvailableBook();
+        Util.cont();
         break;
       case 5:
         return false;
@@ -114,9 +122,20 @@ public class LibraryMenu {
     switch (menu) {
       case 1:
         viewAllBook();
+        Util.cont();
         break;
       case 2:
         viewAvailableBook();
+        Util.cont();
+        break;
+      case 3:
+        insertBook();
+        break;
+      case 4:
+        updateBook();
+        break;
+      case 5:
+        deleteBook();
         break;
       case 6:
         return false;
@@ -127,18 +146,85 @@ public class LibraryMenu {
   // To view all the books in library
   private void viewAllBook() {
     Util.clearConsole();
-    Util.printTable(library.getBooks());
-    Util.cont();
+    Util.printTable(books);
   }
 
   // To view all the book that are available
-  private void viewAvailableBook() {
-    ArrayList<Book> availableBooks = new ArrayList<>(library.getBooks());
+  private void viewAvailableBook() { //yg ini agak bug, dia malah 
+    ArrayList<Book> availableBooks = new ArrayList<>(books);
     availableBooks.removeIf(book -> !book.isAvailable());
 
     Util.clearConsole();
     Util.printTable(availableBooks);
-    Util.cont();
+
   }
+
+    // CRUD for the books in library -- Admin
+
+    // Insert a book to the library
+    public void insertBook(){
+      String title = inputBookTitle();
+      String author = inputBookAuthor();
+      // ArrayList<Book> books = getAllBooks();
+      books.add(new Book(title,author,true));
+      System.out.println("Book successfully added to library!");
+      Util.cont();
+    }
+  // Update a book from the library
+    public void updateBook(){
+      int index = getBookIndex();
+      // ArrayList<Book> books = getAllBooks();
+      Book currBook = books.get(index);
+      String title = inputBookTitle();
+      String author = inputBookAuthor();
+      currBook.updateBook(title, author);
+      System.out.println("Book successfully updated!");
+      Util.cont();
+    }
+    // Remove book from the library
+    public void deleteBook(){
+      int index = getBookIndex();
+      // ArrayList<Book> books = getAllBooks();
+      books.remove(index);
+      System.out.println("Book successfully removed!");
+      Util.cont();
+    }
+
+    private String inputBookTitle(){
+      String title = "";
+      while(title.isEmpty()){
+        System.out.print("Book Title: ");
+        title = Util.scanLine();
+      }
+      return title;
+    }
+
+    
+    private String inputBookAuthor(){
+      String author = "";
+      while(author.isEmpty()){
+        System.out.print("Book Author: ");
+        author = Util.scanLine();
+      }
+      return author;
+    }
+
+    private int getBookIndex(){
+      viewAllBook();
+      int index = -1;
+      while(!validBookIndex(index)){
+        System.out.println("Input the Book Number:");
+        index = Util.scanInteger();
+      }
+      return index-1;
+    }
+
+    private boolean validBookIndex(int index){
+      // ArrayList<Book> books = getAllBooks();
+      if(index >= 0 || index <= books.size())return true;
+      return false;
+    }
+
+
 
 }
