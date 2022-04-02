@@ -25,3 +25,6 @@ Member ::
 Register
 Borrow Book --> set book availability to false
 Return Book
+
+Report Link:
+https://docs.google.com/document/d/1YgYF-p6fb6T0jc1PsPWPmpCwoZa0oPNG-ONM4ICWz1c/edit
