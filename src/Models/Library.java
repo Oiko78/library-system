@@ -89,6 +89,13 @@ public class Library {
     return false;
   }
 
+  public static  Book searchTitle(ArrayList<Book> books, String title){
+    for(int i = 0; i < books.size(); i++){
+      if (books.get(i).getBookTitle().equals(title))return books.get(i);
+    }
+    return null;
+  }
+
 
 
 

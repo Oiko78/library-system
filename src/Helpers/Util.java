@@ -41,7 +41,7 @@ public class Util {
    * Scans a line and remove trailing white spaces
    */
   public static String scanLine() {
-    System.out.print("Input here: ");
+    System.out.print(">> ");
     String str = scan.nextLine();
     return str.trim();
   }
