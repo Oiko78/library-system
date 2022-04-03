@@ -49,9 +49,9 @@ public class LibraryMenu {
     this.books = library.getBooks();
   }
 
-  private ArrayList<Book> getAllBooks(){
-    return library.getBooks();
-  }
+  // private ArrayList<Book> getAllBooks(){
+  //   return library.getBooks();
+  // }
 
   public User displayMainMenu() {
     boolean inMenu = true;
@@ -151,13 +151,35 @@ public class LibraryMenu {
 
   // To view all the book that are available
   private void viewAvailableBook() { //yg ini agak bug, dia malah 
+    Util.clearConsole();
+    ArrayList<Book> availableBooks = getAvailableBook();
+    if(availableBooks.size() == 0){
+      System.out.println("No Books are currently available...");
+      return;
+    }
+    Util.printTable(availableBooks);
+  }
+
+  private ArrayList<Book> getAvailableBook(){
     ArrayList<Book> availableBooks = new ArrayList<>(books);
     availableBooks.removeIf(book -> !book.isAvailable());
-
-    Util.clearConsole();
-    Util.printTable(availableBooks);
-
+    return availableBooks;
   }
+
+    // Member Functions
+    public void borrowBook(){
+      ArrayList<Book> availableBooks = getAvailableBook();
+      if(availableBooks.size()==0){
+        System.out.println("No Books are currently available...");
+        return;
+      }
+      viewAllBook();
+      int index = getBookIndex(availableBooks);
+      Book borrowedBook = availableBooks.get(index);
+      System.out.println("You have succesfully borrowed "+borrowedBook.getBookTitle());
+      books.remove(borrowedBook);
+    }
+
 
     // CRUD for the books in library -- Admin
 
@@ -172,7 +194,7 @@ public class LibraryMenu {
     }
   // Update a book from the library
     public void updateBook(){
-      int index = getBookIndex();
+      int index = getBookIndex(books);
       // ArrayList<Book> books = getAllBooks();
       Book currBook = books.get(index);
       String title = inputBookTitle();
@@ -183,7 +205,7 @@ public class LibraryMenu {
     }
     // Remove book from the library
     public void deleteBook(){
-      int index = getBookIndex();
+      int index = getBookIndex(books);
       // ArrayList<Book> books = getAllBooks();
       books.remove(index);
       System.out.println("Book successfully removed!");
@@ -209,17 +231,17 @@ public class LibraryMenu {
       return author;
     }
 
-    private int getBookIndex(){
+    private int getBookIndex(ArrayList<Book> books){
       viewAllBook();
       int index = -1;
-      while(!validBookIndex(index)){
+      while(!validBookIndex(index, books)){
         System.out.println("Input the Book Number:");
         index = Util.scanInteger();
       }
       return index-1;
     }
 
-    private boolean validBookIndex(int index){
+    private boolean validBookIndex(int index, ArrayList<Book> books){
       // ArrayList<Book> books = getAllBooks();
       if(index >= 0 || index <= books.size())return true;
       return false;
