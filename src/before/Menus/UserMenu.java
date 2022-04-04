@@ -1,10 +1,10 @@
-package Menus;
+package before.Menus;
 
 import java.util.Map;
 
-import Helpers.Util;
-import Models.Member;
-import Models.User;
+import before.Models.Member;
+import before.Models.User;
+import before.Helpers.Util;
 
 /**
  * {@code UserMenu} class represents a menu that will displays some action
@@ -29,6 +29,7 @@ import Models.User;
  * 
  * @author Oliver Chico
  * @author Kevin Bryan
+ * @author Nicholas Indra Wijaa
  * 
  * @see Models.User
  * @see Models.Staff

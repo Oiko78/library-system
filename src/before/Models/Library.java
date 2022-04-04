@@ -1,9 +1,9 @@
-package Models;
+package before.Models;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Helpers.Util;
+import before.Helpers.Util;
 
 /**
  * {@code Library} class represents a library that has a list of books that can
@@ -89,15 +89,12 @@ public class Library {
     return false;
   }
 
-  public static  Book searchTitle(ArrayList<Book> books, String title){
-    for(int i = 0; i < books.size(); i++){
-      if (books.get(i).getBookTitle().equals(title))return books.get(i);
+  public static Book searchTitle(ArrayList<Book> books, String title) {
+    for (int i = 0; i < books.size(); i++) {
+      if (books.get(i).getBookTitle().equals(title))
+        return books.get(i);
     }
     return null;
   }
-
-
-
-
 
 }

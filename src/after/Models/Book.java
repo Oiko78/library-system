@@ -1,4 +1,4 @@
-package Models;
+package after.Models;
 
 /**
  * {@code Book} class represents a book that has attributes such as title,
@@ -44,7 +44,6 @@ public class Book {
   public void changeStatus() {
     this.available = !this.available;
   }
-
 
   public void updateBook(String title, String author) {
     this.title = title.isEmpty() ? this.title : title;

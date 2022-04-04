@@ -1,10 +1,12 @@
+package before;
+
 import java.util.Map;
 
-import Menus.*;
-import Models.*;
+import before.Menus.*;
+import before.Models.*;
 
 public class Main {
-  public Main() {
+  public static void main(String[] args) {
     Library library = Library.initializeLibrary();
     Map<String, User> users = User.initializeUsers();
     User user = null;
@@ -20,9 +22,5 @@ public class Main {
       LibraryMenu libraryMenu = new LibraryMenu(library, user);
       user = libraryMenu.displayMainMenu();
     }
-  }
-
-  public static void main(String[] args) {
-    new Main();
   }
 }

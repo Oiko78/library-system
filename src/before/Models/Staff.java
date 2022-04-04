@@ -1,4 +1,4 @@
-package Models;
+package before.Models;
 
 public class Staff extends User {
 
