@@ -65,7 +65,11 @@ public class LibraryMenu {
     return null;
   }
 
-  private boolean memberMainMenu() {
+  // 
+
+
+  // Before [Long Method]
+  private boolean memberMainMenubefore(){
     System.out.println("Library");
     System.out.println("===========");
     System.out.println("1. View All Books");
@@ -75,6 +79,7 @@ public class LibraryMenu {
     System.out.println("5. Exit");
 
     int menu = -1;
+
     try {
       menu = Util.scanInteger();
     } catch (Exception e) {
@@ -82,6 +87,56 @@ public class LibraryMenu {
       Util.showError(e);
     }
 
+    switch (menu) {
+      case 1:
+        viewAllBook();
+        Util.cont();
+        break;
+      case 2:
+        viewAvailableBook();
+        Util.cont();
+        break;
+      case 3:
+          ArrayList<Book> availableBooks = getAvailableBook();
+          if (availableBooks.size() == 0) {
+            System.out.println("No Books are currently available...");
+          }else{
+            viewAvailableBook();
+            System.out.println("What book to borrow?");
+            int index = getBookIndex(availableBooks);
+            Book borrowedBook = availableBooks.get(index);
+            borrowedBook.changeStatus();
+            System.out.println("You have succesfully borrowed " + borrowedBook.getBookTitle());
+          }
+        Util.cont();
+        break;
+      case 4:
+          String title = inputBookTitle();
+          Book returnedBook = Library.searchTitle(books, title);
+          if (returnedBook == null) {
+            System.out.println("Not a book from this library...");
+          }else{
+            returnedBook.changeStatus();
+            System.out.println("Thanks for returning " + returnedBook.getBookTitle());
+          }
+        Util.cont();
+        break;
+      case 5:
+        return false;
+    }
+    return true;
+  }
+
+  // After
+  private boolean memberMainMenu() {
+    printMemberMainMenu();
+    int menu = -1;
+    try {
+      menu = Util.scanInteger();
+    } catch (Exception e) {
+      Util.clearConsole();
+      Util.showError(e);
+    }
     switch (menu) {
       case 1:
         viewAllBook();
@@ -102,8 +157,17 @@ public class LibraryMenu {
       case 5:
         return false;
     }
-
     return true;
+  }
+
+  private void printMemberMainMenu(){
+    System.out.println("Library");
+    System.out.println("===========");
+    System.out.println("1. View All Books");
+    System.out.println("2. View Available Books");
+    System.out.println("3. Borrow a Book");
+    System.out.println("4. Return a Book");
+    System.out.println("5. Exit");
   }
 
   private boolean staffMainMenu() {
@@ -198,7 +262,6 @@ public class LibraryMenu {
     }
     returnedBook.changeStatus();
     System.out.println("Thanks for returning " + returnedBook.getBookTitle());
-
   }
 
   ///////////////////// Admin Functions//////////////////////////////////////
@@ -230,6 +293,34 @@ public class LibraryMenu {
     books.remove(index);
     System.out.println("Book successfully removed!");
   }
+
+    // Before [Duplicate Code]
+    // private void insertBookBefore() {
+    //   String title = "";
+    //   while (title.isEmpty()) {
+    //     System.out.println("Book Title: ");
+    //     title = Util.scanLine();
+    //   }
+    //   String author = inputBookAuthor();
+    //   // ArrayList<Book> books = getAllBooks();
+    //   books.add(new Book(title, author, true));
+    //   System.out.println("Book successfully added to library!");
+    // }
+
+    // public void updateBookBefore() {
+    //   viewAllBook();
+    //   int index = getBookIndex(books);
+    //   Book currBook = books.get(index);
+    //   String title = "";
+    //   while (title.isEmpty()) {
+    //     System.out.println("Book Title: ");
+    //     title = Util.scanLine();
+    //   }
+    //   String author = inputBookAuthor();
+    //   currBook.updateBook(title, author);
+    //   System.out.println("Book successfully updated!");
+    // }
+  
 
   ///////////////////// Function for getting input +
   ///////////////////// validation/////////////////////
