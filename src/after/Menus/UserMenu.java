@@ -95,15 +95,31 @@ public class UserMenu {
         Util.showError(e);
       }
     }
-
+    
     if (user != null)
-      users.put(user.email, user);
+    users.put(user.email, user);
   }
-
+  
+  private User displayLoginMenu() {
+    User user = null;
+    while (user == null) {
+      Util.clearConsole();
+      System.out.println("Login");
+      System.out.println("===============");
+      try {
+        user = getLoginData();
+      } catch (Exception e) {
+        Util.clearConsole();
+        Util.showError(e);
+      }
+    }
+    return user;
+  }
+  
   private User getRegisterData() throws Exception {
     String email = "", password = "", confirmPassword = "", name = "";
     int age = -1;
-
+    
     System.out.print("Enter your name: ");
     name = Util.scan.nextLine();
 
@@ -138,21 +154,6 @@ public class UserMenu {
     return new Member(email, password, name, age);
   }
 
-  private User displayLoginMenu() {
-    User user = null;
-    while (user == null) {
-      Util.clearConsole();
-      System.out.println("Login");
-      System.out.println("===============");
-      try {
-        user = getLoginData();
-      } catch (Exception e) {
-        Util.clearConsole();
-        Util.showError(e);
-      }
-    }
-    return user;
-  }
 
   private User getLoginData() throws Exception {
     User user = null;

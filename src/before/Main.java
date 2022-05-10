@@ -14,7 +14,7 @@ public class Main {
     boolean inMenu = true;
     while (inMenu) {
       UserMenu userMenu = new UserMenu(users);
-      user = userMenu.displayMainMenu();
+      user = userMenu.dmm();
 
       if (user == null)
         break;

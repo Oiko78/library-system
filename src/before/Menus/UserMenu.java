@@ -50,7 +50,11 @@ public class UserMenu {
   /**
    * Displays default actions that user can choose.
    */
-  public User displayMainMenu() {
+
+  
+  // [Comments]
+  //Display Main Menu
+  public User dmm() {
     boolean inMenu = true;
     while (inMenu) {
       Util.clearConsole();
@@ -71,10 +75,12 @@ public class UserMenu {
 
       switch (menu) {
         case 1:
-          displayRegisterMenu();
+        // Display Register Menu
+          drm();
           break;
         case 2:
-          return displayLoginMenu();
+        // Display Login Menu
+        return dlm();
         case 3:
           inMenu = false;
           break;
@@ -83,14 +89,16 @@ public class UserMenu {
     return null;
   }
 
-  private void displayRegisterMenu() {
+  // Display Register Method
+  private void drm() {
     User user = null;
     while (user == null) {
       Util.clearConsole();
       System.out.println("Register");
       System.out.println("===============");
       try {
-        user = getRegisterData();
+        // Get Register Data
+        user = grd();
       } catch (Exception e) {
         Util.clearConsole();
         Util.showError(e);
@@ -101,7 +109,26 @@ public class UserMenu {
       users.put(user.email, user);
   }
 
-  private User getRegisterData() throws Exception {
+  // Display Login Menu
+  private User dlm() {
+    User user = null;
+    while (user == null) {
+      Util.clearConsole();
+      System.out.println("Login");
+      System.out.println("===============");
+      try {
+        // Get Login Data
+        user = gld();
+      } catch (Exception e) {
+        Util.clearConsole();
+        Util.showError(e);
+      }
+    }
+    return user;
+  }
+
+  // Get Register Data
+  private User grd() throws Exception {
     String email = "", password = "", confirmPassword = "", name = "";
     int age = -1;
 
@@ -139,23 +166,10 @@ public class UserMenu {
     return new Member(email, password, name, age);
   }
 
-  private User displayLoginMenu() {
-    User user = null;
-    while (user == null) {
-      Util.clearConsole();
-      System.out.println("Login");
-      System.out.println("===============");
-      try {
-        user = getLoginData();
-      } catch (Exception e) {
-        Util.clearConsole();
-        Util.showError(e);
-      }
-    }
-    return user;
-  }
 
-  private User getLoginData() throws Exception {
+
+  // Get Login Data
+  private User gld() throws Exception {
     User user = null;
     String email = "", password = "";
 
@@ -180,7 +194,13 @@ public class UserMenu {
     return password.compareTo(confirmPassword) == 0;
   }
 
+  //[Dead Code]
+  private int getPasswordLength(String password){
+    return password.length();
+  }
+
   private boolean isExistsEmail(String email) {
     return users.containsKey(email);
   }
 }
+

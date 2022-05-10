@@ -68,6 +68,7 @@ public class LibraryMenu {
     return null;
   }
 
+  // [Long Method]
   private boolean memberMainMenu() {
     System.out.println("Library");
     System.out.println("===========");
@@ -158,6 +159,7 @@ public class LibraryMenu {
     }
     return true;
   }
+
 
   private boolean staffMainMenu() {
     System.out.println("Library");
@@ -269,7 +271,7 @@ public class LibraryMenu {
         System.out.println("Input the Book Number:");
         index = Util.scanInteger();
       }
-
+      //[Dead Code]
       Book currBook = books.get(index - 1);
       books.remove(index);
       System.out.println("Book successfully removed!");

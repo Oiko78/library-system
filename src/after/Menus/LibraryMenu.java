@@ -33,7 +33,7 @@ import after.Helpers.Util;
  * 
  * @author Oliver Chico
  * @author Kevin Bryan
- * @author Nicholas Indra Wijaa
+ * @author Nicholas Indra Wijaya
  * 
  * @see Models.User
  * @see Models.Library
@@ -68,66 +68,66 @@ public class LibraryMenu {
   // 
 
 
-  // Before [Long Method]
-  private boolean memberMainMenubefore(){
-    System.out.println("Library");
-    System.out.println("===========");
-    System.out.println("1. View All Books");
-    System.out.println("2. View Available Books");
-    System.out.println("3. Borrow a Book");
-    System.out.println("4. Return a Book");
-    System.out.println("5. Exit");
+  // // Before [Long Method]
+  // private boolean memberMainMenubefore(){
+  //   System.out.println("Library");
+  //   System.out.println("===========");
+  //   System.out.println("1. View All Books");
+  //   System.out.println("2. View Available Books");
+  //   System.out.println("3. Borrow a Book");
+  //   System.out.println("4. Return a Book");
+  //   System.out.println("5. Exit");
 
-    int menu = -1;
+  //   int menu = -1;
 
-    try {
-      menu = Util.scanInteger();
-    } catch (Exception e) {
-      Util.clearConsole();
-      Util.showError(e);
-    }
+  //   try {
+  //     menu = Util.scanInteger();
+  //   } catch (Exception e) {
+  //     Util.clearConsole();
+  //     Util.showError(e);
+  //   }
 
-    switch (menu) {
-      case 1:
-        viewAllBook();
-        Util.cont();
-        break;
-      case 2:
-        viewAvailableBook();
-        Util.cont();
-        break;
-      case 3:
-          ArrayList<Book> availableBooks = getAvailableBook();
-          if (availableBooks.size() == 0) {
-            System.out.println("No Books are currently available...");
-          }else{
-            viewAvailableBook();
-            System.out.println("What book to borrow?");
-            int index = getBookIndex(availableBooks);
-            Book borrowedBook = availableBooks.get(index);
-            borrowedBook.changeStatus();
-            System.out.println("You have succesfully borrowed " + borrowedBook.getBookTitle());
-          }
-        Util.cont();
-        break;
-      case 4:
-          String title = inputBookTitle();
-          Book returnedBook = Library.searchTitle(books, title);
-          if (returnedBook == null) {
-            System.out.println("Not a book from this library...");
-          }else{
-            returnedBook.changeStatus();
-            System.out.println("Thanks for returning " + returnedBook.getBookTitle());
-          }
-        Util.cont();
-        break;
-      case 5:
-        return false;
-    }
-    return true;
-  }
+  //   switch (menu) {
+  //     case 1:
+  //       viewAllBook();
+  //       Util.cont();
+  //       break;
+  //     case 2:
+  //       viewAvailableBook();
+  //       Util.cont();
+  //       break;
+  //     case 3:
+  //         ArrayList<Book> availableBooks = getAvailableBook();
+  //         if (availableBooks.size() == 0) {
+  //           System.out.println("No Books are currently available...");
+  //         }else{
+  //           viewAvailableBook();
+  //           System.out.println("What book to borrow?");
+  //           int index = getBookIndex(availableBooks);
+  //           Book borrowedBook = availableBooks.get(index);
+  //           borrowedBook.changeStatus();
+  //           System.out.println("You have succesfully borrowed " + borrowedBook.getBookTitle());
+  //         }
+  //       Util.cont();
+  //       break;
+  //     case 4:
+  //         String title = inputBookTitle();
+  //         Book returnedBook = Library.searchTitle(books, title);
+  //         if (returnedBook == null) {
+  //           System.out.println("Not a book from this library...");
+  //         }else{
+  //           returnedBook.changeStatus();
+  //           System.out.println("Thanks for returning " + returnedBook.getBookTitle());
+  //         }
+  //       Util.cont();
+  //       break;
+  //     case 5:
+  //       return false;
+  //   }
+  //   return true;
+  // }
 
-  // After
+  // After [Long Method]
   private boolean memberMainMenu() {
     printMemberMainMenu();
     int menu = -1;
@@ -160,8 +160,45 @@ public class LibraryMenu {
     return true;
   }
 
-  private void printMemberMainMenu(){
-    System.out.println("Library");
+  
+  private boolean staffMainMenu() {
+    printStaffMainMenu();
+    int menu = -1;
+    try {
+      menu = Util.scanInteger();
+    } catch (Exception e) {
+      Util.clearConsole();
+      Util.showError(e);
+    }
+    switch (menu) {
+      case 1:
+      viewAllBook();
+        Util.cont();
+        break;
+        case 2:
+        viewAvailableBook();
+        Util.cont();
+        break;
+        case 3:
+        insertBook();
+        Util.cont();
+        break;
+        case 4:
+        updateBook();
+        Util.cont();
+        break;
+        case 5:
+        deleteBook();
+        Util.cont();
+        break;
+        case 6:
+        return false;
+      }
+      return true;
+    }
+    
+    private void printMemberMainMenu(){
+      System.out.println("Library");
     System.out.println("===========");
     System.out.println("1. View All Books");
     System.out.println("2. View Available Books");
@@ -169,8 +206,8 @@ public class LibraryMenu {
     System.out.println("4. Return a Book");
     System.out.println("5. Exit");
   }
-
-  private boolean staffMainMenu() {
+  
+  private void printStaffMainMenu(){
     System.out.println("Library");
     System.out.println("===========");
     System.out.println("1. View All Books");
@@ -179,50 +216,14 @@ public class LibraryMenu {
     System.out.println("4. Update a Book");
     System.out.println("5. Delete a Book");
     System.out.println("6. Exit");
-
-    int menu = -1;
-    try {
-      menu = Util.scanInteger();
-    } catch (Exception e) {
-      Util.clearConsole();
-      Util.showError(e);
-    }
-
-    switch (menu) {
-      case 1:
-        viewAllBook();
-        Util.cont();
-        break;
-      case 2:
-        viewAvailableBook();
-        Util.cont();
-        break;
-      case 3:
-        insertBook();
-        Util.cont();
-        break;
-      case 4:
-        updateBook();
-        Util.cont();
-        break;
-      case 5:
-        deleteBook();
-        Util.cont();
-        break;
-      case 6:
-        return false;
-    }
-    return true;
   }
-
-  // To view all the books in library
+  
   private void viewAllBook() {
-    Util.clearConsole();
-    Util.printTable(books);
+      Util.clearConsole();
+      Util.printTable(books);
   }
-
-  // To view all the book that are available
-  private void viewAvailableBook() { // yg ini agak bug, dia malah
+  
+  private void viewAvailableBook() {
     Util.clearConsole();
     ArrayList<Book> availableBooks = getAvailableBook();
     if (availableBooks.size() == 0) {
@@ -266,16 +267,15 @@ public class LibraryMenu {
 
   ///////////////////// Admin Functions//////////////////////////////////////
 
-  // Insert a book to the library
   private void insertBook() {
     String title = inputBookTitle();
     String author = inputBookAuthor();
     // ArrayList<Book> books = getAllBooks();
-    books.add(new Book(title, author, true));
+    Book newBook = new Book(title, author, true);
+    books.add(newBook);
     System.out.println("Book successfully added to library!");
   }
 
-  // Update a book from the library
   public void updateBook() {
     viewAllBook();
     int index = getBookIndex(books);
@@ -286,41 +286,12 @@ public class LibraryMenu {
     System.out.println("Book successfully updated!");
   }
 
-  // Remove book from the library
   private void deleteBook() {
     viewAllBook();
     int index = getBookIndex(books);
     books.remove(index);
     System.out.println("Book successfully removed!");
   }
-
-    // Before [Duplicate Code]
-    // private void insertBookBefore() {
-    //   String title = "";
-    //   while (title.isEmpty()) {
-    //     System.out.println("Book Title: ");
-    //     title = Util.scanLine();
-    //   }
-    //   String author = inputBookAuthor();
-    //   // ArrayList<Book> books = getAllBooks();
-    //   books.add(new Book(title, author, true));
-    //   System.out.println("Book successfully added to library!");
-    // }
-
-    // public void updateBookBefore() {
-    //   viewAllBook();
-    //   int index = getBookIndex(books);
-    //   Book currBook = books.get(index);
-    //   String title = "";
-    //   while (title.isEmpty()) {
-    //     System.out.println("Book Title: ");
-    //     title = Util.scanLine();
-    //   }
-    //   String author = inputBookAuthor();
-    //   currBook.updateBook(title, author);
-    //   System.out.println("Book successfully updated!");
-    // }
-  
 
   ///////////////////// Function for getting input +
   ///////////////////// validation/////////////////////
