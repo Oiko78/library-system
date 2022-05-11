@@ -5,65 +5,69 @@ import java.util.Scanner;
 
 import after.Helpers.Util;
 
-/**
- * {@code Library} class represents a library that has a list of books that can
- * be initialized manually.
- * 
- * <p>
- * Usage example:
- * <blockquote>
- * 
- * <pre>
- * ArrayList<Book> books = new ArrrayList<>();
- * books.add(new Book("title1", "author1", true));
- * books.add(new Book("title2", "author2", true));
- * 
- * Library = new Library(books);
- * </pre>
- * 
- * </blockquote>
- * </p>
- * <p>
- * By default, library consists pre-initialized books. Example:
- * <blockquote>
- * 
- * <pre>
- * Library library = Library.initializeLibrary();
- * </pre>
- * 
- * </blockquote>
- * </p>
- * 
- * @author Oliver Chico
- * @author Kevin Bryan
- * 
- * @see Models.Book
- */
 public class Library {
   private ArrayList<Book> books;
+  private ArrayList<BookTransaction> transactions;
 
   public Library() {
     this.books = new ArrayList<Book>();
+    this.transactions = new ArrayList<BookTransaction>();
   }
 
   public Library(ArrayList<Book> books) {
     this.books = books;
+    this.transactions = new ArrayList<BookTransaction>();
   }
 
-  public ArrayList<Book> getBooks() {
-    return new ArrayList<Book>(books);
+  public int chooseBook() {
+    int index = -1;
+    while (!validBookIndex(index)) {
+      System.out.println("Input the Book Number:");
+      index = Util.scanInteger();
+    }
+    return index - 1;
   }
 
   public Book getBook(int index) {
     return books.get(index);
   }
 
+  public Book getBook(String title) {
+    for (Book book : books) {
+      if (book.getBookTitle().equalsIgnoreCase(title))
+        return book;
+    }
+
+    return null;
+  }
+
   public void removeBook(Book book) {
     books.remove(book);
   }
 
+  public void removeBook(int index) {
+    books.remove(index);
+  }
+
   public void insertBook(Book book) {
     books.add(book);
+  }
+
+  public boolean viewBooks(boolean isAvailable) {
+    Util.clearConsole();
+    ArrayList<Book> books = new ArrayList<>(this.books);
+
+    if (isAvailable) {
+      books.removeIf(book -> !book.isAvailable());
+    }
+
+    if (books.isEmpty()) {
+      System.out.println("No Books are currently available...");
+      return false;
+    }
+
+    Util.printTable(books);
+    return true;
   }
 
   /**
@@ -83,18 +87,26 @@ public class Library {
 
   public boolean isExistsBook(String title) {
     for (Book book : books)
-      if (book.getBookTitle().compareTo(title) == 0)
+      if (book.compareTo(title))
         return true;
 
     return false;
   }
 
-  public static Book searchTitle(ArrayList<Book> books, String title) {
-    for (int i = 0; i < books.size(); i++) {
-      if (books.get(i).getBookTitle().equals(title))
-        return books.get(i);
-    }
-    return null;
+  private boolean validBookIndex(int index) {
+    if (index >= 1 && index <= books.size())
+      return true;
+    return false;
   }
 
+  public void addTransaction(BookTransaction transaction) {
+    System.out.println("abc");
+    transactions.add(transaction);
+  }
+
+  public void removeTransaction(BookTransaction transaction) {
+    transactions
+        .removeIf(trx -> trx.getBook().equals(transaction.getBook()) &&
+            trx.getUser().equals(transaction.getUser()));
+  }
 }

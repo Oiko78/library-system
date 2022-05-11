@@ -42,12 +42,13 @@ import after.Helpers.Util;
 public class LibraryMenu {
   private Library library;
   private User user;
-  private ArrayList<Book> books;
 
-  public LibraryMenu(Library library, User user) {
+  public LibraryMenu(Library library) {
     this.library = library;
+  }
+
+  public void setUser(User user) {
     this.user = user;
-    this.books = library.getBooks();
   }
 
   public User displayMainMenu() {
@@ -65,66 +66,66 @@ public class LibraryMenu {
     return null;
   }
 
-  // 
-
+  //
 
   // // Before [Long Method]
   // private boolean memberMainMenubefore(){
-  //   System.out.println("Library");
-  //   System.out.println("===========");
-  //   System.out.println("1. View All Books");
-  //   System.out.println("2. View Available Books");
-  //   System.out.println("3. Borrow a Book");
-  //   System.out.println("4. Return a Book");
-  //   System.out.println("5. Exit");
+  // System.out.println("Library");
+  // System.out.println("===========");
+  // System.out.println("1. View All Books");
+  // System.out.println("2. View Available Books");
+  // System.out.println("3. Borrow a Book");
+  // System.out.println("4. Return a Book");
+  // System.out.println("5. Exit");
 
-  //   int menu = -1;
+  // int menu = -1;
 
-  //   try {
-  //     menu = Util.scanInteger();
-  //   } catch (Exception e) {
-  //     Util.clearConsole();
-  //     Util.showError(e);
-  //   }
+  // try {
+  // menu = Util.scanInteger();
+  // } catch (Exception e) {
+  // Util.clearConsole();
+  // Util.showError(e);
+  // }
 
-  //   switch (menu) {
-  //     case 1:
-  //       viewAllBook();
-  //       Util.cont();
-  //       break;
-  //     case 2:
-  //       viewAvailableBook();
-  //       Util.cont();
-  //       break;
-  //     case 3:
-  //         ArrayList<Book> availableBooks = getAvailableBook();
-  //         if (availableBooks.size() == 0) {
-  //           System.out.println("No Books are currently available...");
-  //         }else{
-  //           viewAvailableBook();
-  //           System.out.println("What book to borrow?");
-  //           int index = getBookIndex(availableBooks);
-  //           Book borrowedBook = availableBooks.get(index);
-  //           borrowedBook.changeStatus();
-  //           System.out.println("You have succesfully borrowed " + borrowedBook.getBookTitle());
-  //         }
-  //       Util.cont();
-  //       break;
-  //     case 4:
-  //         String title = inputBookTitle();
-  //         Book returnedBook = Library.searchTitle(books, title);
-  //         if (returnedBook == null) {
-  //           System.out.println("Not a book from this library...");
-  //         }else{
-  //           returnedBook.changeStatus();
-  //           System.out.println("Thanks for returning " + returnedBook.getBookTitle());
-  //         }
-  //       Util.cont();
-  //       break;
-  //     case 5:
-  //       return false;
-  //   }
-  //   return true;
+  // switch (menu) {
+  // case 1:
+  // viewAllBook();
+  // Util.cont();
+  // break;
+  // case 2:
+  // viewAvailableBook();
+  // Util.cont();
+  // break;
+  // case 3:
+  // ArrayList<Book> availableBooks = getAvailableBook();
+  // if (availableBooks.size() == 0) {
+  // System.out.println("No Books are currently available...");
+  // }else{
+  // viewAvailableBook();
+  // System.out.println("What book to borrow?");
+  // int index = getBookIndex(availableBooks);
+  // Book borrowedBook = availableBooks.get(index);
+  // borrowedBook.changeStatus();
+  // System.out.println("You have succesfully borrowed " +
+  // borrowedBook.getBookTitle());
+  // }
+  // Util.cont();
+  // break;
+  // case 4:
+  // String title = inputBookTitle();
+  // Book returnedBook = Library.searchTitle(books, title);
+  // if (returnedBook == null) {
+  // System.out.println("Not a book from this library...");
+  // }else{
+  // returnedBook.changeStatus();
+  // System.out.println("Thanks for returning " + returnedBook.getBookTitle());
+  // }
+  // Util.cont();
+  // break;
+  // case 5:
+  // return false;
+  // }
+  // return true;
   // }
 
   // After [Long Method]
@@ -160,7 +161,6 @@ public class LibraryMenu {
     return true;
   }
 
-  
   private boolean staffMainMenu() {
     printStaffMainMenu();
     int menu = -1;
@@ -172,33 +172,33 @@ public class LibraryMenu {
     }
     switch (menu) {
       case 1:
-      viewAllBook();
+        viewAllBook();
         Util.cont();
         break;
-        case 2:
+      case 2:
         viewAvailableBook();
         Util.cont();
         break;
-        case 3:
+      case 3:
         insertBook();
         Util.cont();
         break;
-        case 4:
+      case 4:
         updateBook();
         Util.cont();
         break;
-        case 5:
+      case 5:
         deleteBook();
         Util.cont();
         break;
-        case 6:
+      case 6:
         return false;
-      }
-      return true;
     }
-    
-    private void printMemberMainMenu(){
-      System.out.println("Library");
+    return true;
+  }
+
+  private void printMemberMainMenu() {
+    System.out.println("Library");
     System.out.println("===========");
     System.out.println("1. View All Books");
     System.out.println("2. View Available Books");
@@ -206,8 +206,8 @@ public class LibraryMenu {
     System.out.println("4. Return a Book");
     System.out.println("5. Exit");
   }
-  
-  private void printStaffMainMenu(){
+
+  private void printStaffMainMenu() {
     System.out.println("Library");
     System.out.println("===========");
     System.out.println("1. View All Books");
@@ -217,79 +217,70 @@ public class LibraryMenu {
     System.out.println("5. Delete a Book");
     System.out.println("6. Exit");
   }
-  
-  private void viewAllBook() {
-      Util.clearConsole();
-      Util.printTable(books);
-  }
-  
-  private void viewAvailableBook() {
-    Util.clearConsole();
-    ArrayList<Book> availableBooks = getAvailableBook();
-    if (availableBooks.size() == 0) {
-      System.out.println("No Books are currently available...");
-      return;
-    }
-    Util.printTable(availableBooks);
+
+  /////////////////////////// User Functions////////////////////////////
+
+  private boolean viewAllBook() {
+    return library.viewBooks(false);
   }
 
-  private ArrayList<Book> getAvailableBook() {
-    ArrayList<Book> availableBooks = new ArrayList<>(books);
-    availableBooks.removeIf(book -> !book.isAvailable());
-    return availableBooks;
+  private boolean viewAvailableBook() {
+    return library.viewBooks(true);
   }
 
   /////////////////////////// Member Functions////////////////////////////
   private void borrowBook() {
-    ArrayList<Book> availableBooks = getAvailableBook();
-    if (availableBooks.size() == 0) {
-      System.out.println("No Books are currently available...");
+    if (!viewAvailableBook())
       return;
-    }
-    viewAvailableBook();
+
     System.out.println("What book to borrow?");
-    int index = getBookIndex(availableBooks);
-    Book borrowedBook = availableBooks.get(index);
-    borrowedBook.changeStatus();
-    System.out.println("You have succesfully borrowed " + borrowedBook.getBookTitle());
+    int index = library.chooseBook();
+    Book book = library.getBook(index);
+    library.addTransaction(((Member) user).borrowBook(book));
+    System.out.println("You have succesfully borrwed " + book.getBookTitle());
   }
 
   private void returnBook() {
+    if (!((Member) user).viewBooks())
+      return;
+
     String title = inputBookTitle();
-    Book returnedBook = Library.searchTitle(books, title);
-    if (returnedBook == null) {
-      System.out.println("Not a book from this library...");
+    Book book = ((Member) user).getBook(title);
+    if (book == null) {
+      System.out.println("You did not borrow that book.");
       return;
     }
-    returnedBook.changeStatus();
-    System.out.println("Thanks for returning " + returnedBook.getBookTitle());
+    library.removeTransaction(((Member) user).returnBook(book));
+    System.out.println("Thanks for returning " + book.getBookTitle());
   }
 
-  ///////////////////// Admin Functions//////////////////////////////////////
+  /////////////////////////// Admin Functions////////////////////////////
 
   private void insertBook() {
     String title = inputBookTitle();
     String author = inputBookAuthor();
-    // ArrayList<Book> books = getAllBooks();
-    Book newBook = new Book(title, author, true);
-    books.add(newBook);
+    library.insertBook(new Book(title, author, true));
     System.out.println("Book successfully added to library!");
   }
 
   public void updateBook() {
-    viewAllBook();
-    int index = getBookIndex(books);
-    Book currBook = books.get(index);
+    if (!viewAllBook())
+      return;
+
+    int index = library.chooseBook();
+    Book book = library.getBook(index);
     String title = inputBookTitle();
     String author = inputBookAuthor();
-    currBook.updateBook(title, author);
+    book.updateBook(title, author);
     System.out.println("Book successfully updated!");
   }
 
   private void deleteBook() {
-    viewAllBook();
-    int index = getBookIndex(books);
-    books.remove(index);
+    if (!viewAllBook())
+      return;
+
+    int index = library.chooseBook();
+    library.removeBook(index);
     System.out.println("Book successfully removed!");
   }
 
@@ -313,20 +304,4 @@ public class LibraryMenu {
     }
     return author;
   }
-
-  private int getBookIndex(ArrayList<Book> books) {
-    int index = -1;
-    while (!validBookIndex(index, books)) {
-      System.out.println("Input the Book Number:");
-      index = Util.scanInteger();
-    }
-    return index - 1;
-  }
-
-  private boolean validBookIndex(int index, ArrayList<Book> books) {
-    if (index >= 1 && index <= books.size())
-      return true;
-    return false;
-  }
-
 }

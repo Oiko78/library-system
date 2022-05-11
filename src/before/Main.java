@@ -19,7 +19,9 @@ public class Main {
       if (user == null)
         break;
 
-      LibraryMenu libraryMenu = new LibraryMenu(library, user);
+      LibraryMenu libraryMenu = new LibraryMenu(library);
+      libraryMenu.setUser(user.email, user.password, user.name, user.age,
+          user instanceof Member ? User.MEMBER : User.STAFF);
       user = libraryMenu.displayMainMenu();
     }
   }

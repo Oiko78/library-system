@@ -16,11 +16,11 @@ public class Member extends User {
 
   public void borrowBook(Book book) {
     books.add(book);
-    book.changeStatus();
+    book.setUnavailable();
   }
 
   public void returnBook(Book book) {
     books.remove(book);
-    book.changeStatus();
+    book.setAvailable();
   }
 }

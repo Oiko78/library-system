@@ -42,12 +42,17 @@ import before.Helpers.Util;
 public class LibraryMenu {
   private Library library;
   private User user;
-  private ArrayList<Book> books;
 
-  public LibraryMenu(Library library, User user) {
+  public LibraryMenu(Library library) {
     this.library = library;
-    this.user = user;
-    this.books = library.getBooks();
+  }
+
+  public void setUser(String email, String password, String name, int age, int type) {
+    if (type == User.MEMBER) {
+      this.user = new Member(email, password, name, age);
+    } else if (type == User.STAFF) {
+      this.user = new Staff(email, name, password, age);
+    }
   }
 
   public User displayMainMenu() {
@@ -90,9 +95,9 @@ public class LibraryMenu {
       Util.clearConsole();
 
       System.out.println("=======================");
-      for (int i = 0; i < books.size(); i++) {
-        System.out.println((i + 1) + ". " + books.get(i));
-        if (i == books.size() - 1)
+      for (int i = 0; i < library.getBooks().size(); i++) {
+        System.out.println((i + 1) + ". " + library.getBooks().get(i));
+        if (i == library.getBooks().size() - 1)
           continue;
 
         System.out.println("-----------------------");
@@ -101,7 +106,7 @@ public class LibraryMenu {
     } else if (menu == 2) { // viewAvailableBooks
       Util.clearConsole();
 
-      ArrayList<Book> availableBooks = new ArrayList<>(books);
+      ArrayList<Book> availableBooks = new ArrayList<>(library.getBooks());
       availableBooks.removeIf(book -> !book.isAvailable());
       if (availableBooks.size() == 0) {
         System.out.println("No Books are currently available...");
@@ -117,7 +122,7 @@ public class LibraryMenu {
         System.out.println("=======================\n");
       }
     } else if (menu == 3) { // borrowBook
-      ArrayList<Book> availableBooks = new ArrayList<>(books);
+      ArrayList<Book> availableBooks = new ArrayList<>(library.getBooks());
       availableBooks.removeIf(book -> !book.isAvailable());
       if (availableBooks.size() == 0) {
         System.out.println("No Books are currently available...");
@@ -133,7 +138,7 @@ public class LibraryMenu {
         System.out.println("=======================\n");
         System.out.println("What book to borrow?");
         int index = -1;
-        while (!(index >= 1 && index <= books.size())) {
+        while (!(index >= 1 && index <= library.getBooks().size())) {
           System.out.println("Input the Book Number:");
           index = Util.scanInteger();
         }
@@ -147,7 +152,7 @@ public class LibraryMenu {
         System.out.println("Book Title: ");
         title = Util.scanLine();
       }
-      Book returnedBook = Library.searchTitle(books, title);
+      Book returnedBook = Library.searchTitle(library.getBooks(), title);
       if (returnedBook == null) {
         System.out.println("Not a book from this library...");
       } else {
@@ -159,7 +164,6 @@ public class LibraryMenu {
     }
     return true;
   }
-
 
   private boolean staffMainMenu() {
     System.out.println("Library");
@@ -181,16 +185,16 @@ public class LibraryMenu {
 
     if (menu == 1) { // viewAllBooks
       System.out.println("=======================");
-      for (int i = 0; i < books.size(); i++) {
-        System.out.println((i + 1) + ". " + books.get(i));
-        if (i == books.size() - 1)
+      for (int i = 0; i < library.getBooks().size(); i++) {
+        System.out.println((i + 1) + ". " + library.getBooks().get(i));
+        if (i == library.getBooks().size() - 1)
           continue;
 
         System.out.println("-----------------------");
       }
       System.out.println("=======================\n");
     } else if (menu == 2) { // viewAvailableBooks
-      ArrayList<Book> availableBooks = new ArrayList<>(books);
+      ArrayList<Book> availableBooks = new ArrayList<>(library.getBooks());
       availableBooks.removeIf(book -> !book.isAvailable());
       if (availableBooks.size() == 0) {
         System.out.println("No Books are currently available...");
@@ -219,13 +223,13 @@ public class LibraryMenu {
         author = Util.scanLine();
       }
 
-      books.add(new Book(title, author, true));
+      library.getBooks().add(new Book(title, author, true));
       System.out.println("Book successfully added to library!");
     } else if (menu == 4) { // updateBook
       System.out.println("=======================");
-      for (int i = 0; i < books.size(); i++) {
-        System.out.println((i + 1) + ". " + books.get(i));
-        if (i == books.size() - 1)
+      for (int i = 0; i < library.getBooks().size(); i++) {
+        System.out.println((i + 1) + ". " + library.getBooks().get(i));
+        if (i == library.getBooks().size() - 1)
           continue;
 
         System.out.println("-----------------------");
@@ -233,12 +237,12 @@ public class LibraryMenu {
       System.out.println("=======================\n");
 
       int index = -1;
-      while (!(index >= 1 && index <= books.size())) {
+      while (!(index >= 1 && index <= library.getBooks().size())) {
         System.out.println("Input the Book Number:");
         index = Util.scanInteger();
       }
 
-      Book currBook = books.get(index - 1);
+      Book currBook = library.getBooks().get(index - 1);
 
       String title = "";
       String author = "";
@@ -257,9 +261,9 @@ public class LibraryMenu {
       System.out.println("Book successfully updated!");
     } else if (menu == 5) { // deleteBook
       System.out.println("=======================");
-      for (int i = 0; i < books.size(); i++) {
-        System.out.println((i + 1) + ". " + books.get(i));
-        if (i == books.size() - 1)
+      for (int i = 0; i < library.getBooks().size(); i++) {
+        System.out.println((i + 1) + ". " + library.getBooks().get(i));
+        if (i == library.getBooks().size() - 1)
           continue;
 
         System.out.println("-----------------------");
@@ -267,13 +271,13 @@ public class LibraryMenu {
       System.out.println("=======================\n");
 
       int index = -1;
-      while (!(index >= 1 && index <= books.size())) {
+      while (!(index >= 1 && index <= library.getBooks().size())) {
         System.out.println("Input the Book Number:");
         index = Util.scanInteger();
       }
-      //[Dead Code]
-      Book currBook = books.get(index - 1);
-      books.remove(index);
+      // [Dead Code]
+      Book currBook = library.getBooks().get(index - 1);
+      library.getBooks().remove(index);
       System.out.println("Book successfully removed!");
     } else if (menu == 6) {
       return false;

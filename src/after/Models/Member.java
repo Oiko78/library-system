@@ -2,6 +2,8 @@ package after.Models;
 
 import java.util.ArrayList;
 
+import after.Helpers.Util;
+
 public class Member extends User {
   private ArrayList<Book> books;
 
@@ -10,17 +12,37 @@ public class Member extends User {
     books = new ArrayList<Book>();
   }
 
-  public ArrayList<Book> getBooks() {
-    return new ArrayList<Book>(books);
+  public boolean viewBooks() {
+    Util.clearConsole();
+    ArrayList<Book> books = new ArrayList<>(this.books);
+
+    if (books.isEmpty()) {
+      System.out.println("You have no books...");
+      return false;
+    }
+
+    Util.printTable(books);
+    return true;
   }
 
-  public void borrowBook(Book book) {
+  public BookTransaction borrowBook(Book book) {
     books.add(book);
-    book.changeStatus();
+    book.setAvailable(false);
+    return new BookTransaction(this, book);
   }
 
-  public void returnBook(Book book) {
+  public BookTransaction returnBook(Book book) {
     books.remove(book);
-    book.changeStatus();
+    book.setAvailable(true);
+    return new BookTransaction(this, book);
+  }
+
+  public Book getBook(String title) {
+    for (Book book : books) {
+      if (book.getBookTitle().equalsIgnoreCase(title))
+        return book;
+    }
+
+    return null;
   }
 }

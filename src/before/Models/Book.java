@@ -43,8 +43,12 @@ public class Book {
     return this.available;
   }
 
-  public void changeStatus() {
-    this.available = !this.available;
+  public void setUnavailable() {
+    this.available = false;
+  }
+
+  public void setAvailable() {
+    this.available = true;
   }
 
   public void updateBook(String title, String author) {

@@ -23,6 +23,9 @@ import java.util.Map;
  * @author Kevin Bryan
  */
 public class User {
+  public static final int MEMBER = 1;
+  public static final int STAFF = 2;
+
   public String name;
   public String email;
   public String password;

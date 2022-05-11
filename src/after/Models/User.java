@@ -1,5 +1,7 @@
 package after.Models;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +24,9 @@ import java.util.Map;
  * @author Oliver Chico
  * @author Kevin Bryan
  */
-public class User {
+public abstract class User {
+  public static final int MEMBER = 1;
+  public static final int STAFF = 2;
   public String name;
   public String email;
   public String password;

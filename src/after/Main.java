@@ -19,7 +19,8 @@ public class Main {
       if (user == null)
         break;
 
-      LibraryMenu libraryMenu = new LibraryMenu(library, user);
+      LibraryMenu libraryMenu = new LibraryMenu(library);
+      libraryMenu.setUser(user);
       user = libraryMenu.displayMainMenu();
     }
   }

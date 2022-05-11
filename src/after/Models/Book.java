@@ -41,8 +41,8 @@ public class Book {
     return this.available;
   }
 
-  public void changeStatus() {
-    this.available = !this.available;
+  public void setAvailable(boolean available) {
+    this.available = available;
   }
 
   public void updateBook(String title, String author) {
@@ -60,5 +60,9 @@ public class Book {
     str = str.concat("author: " + author + "\n");
     str = str.concat("status: " + (available ? "available" : "borrowed"));
     return str;
+  }
+
+  public boolean compareTo(String title) {
+    return this.title.equals(title);
   }
 }
