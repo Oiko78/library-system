@@ -21,39 +21,38 @@ import java.util.Date;
  * @author Kevin Bryan
  */
 public class Book {
-  private String title;
-  private String author;
-  private boolean available;
+
+  // Broken Modularization
+  BookData bookData;
 
   public Book(String title, String author, boolean available) {
-    this.title = title;
-    this.author = author;
-    this.available = available;
-  }
-
-  public String getBookTitle() {
-    return this.title;
-  }
-
-  public String getBookAuthor() {
-    return this.author;
-  }
-
-  public boolean isAvailable() {
-    return this.available;
-  }
-
-  public void setUnavailable() {
-    this.available = false;
-  }
-
-  public void setAvailable() {
-    this.available = true;
+    this.bookData = new BookData(title, author, available);
   }
 
   public void updateBook(String title, String author) {
-    this.title = title.isEmpty() ? this.title : title;
-    this.author = author.isEmpty() ? this.author : author;
+    this.bookData.title = title.isEmpty() ? this.bookData.title : title;
+    this.bookData.author = author.isEmpty() ? this.bookData.author : author;
+  }
+
+    
+  public String getBookTitle() {
+    return this.bookData.getBookTitle();
+  }
+
+  public String getBookAuthor() {
+    return this.bookData.getBookAuthor();
+  }
+
+  public boolean isAvailable() {
+    return this.bookData.available;
+  }
+
+  public void setUnavailable() {
+    this.bookData.available = false;
+  }
+
+  public void setAvailable() {
+    this.bookData.available = true;
   }
 
   /**
@@ -62,9 +61,9 @@ public class Book {
   @Override
   public String toString() {
     String str = "";
-    str = str.concat(title + "\n");
-    str = str.concat("author: " + author + "\n");
-    str = str.concat("status: " + (available ? "available" : "borrowed"));
+    str = str.concat(this.getBookTitle() + "\n");
+    str = str.concat("author: " + this.getBookAuthor() + "\n");
+    str = str.concat("status: " + (this.bookData.available ? "available" : "borrowed"));
     return str;
   }
 }
